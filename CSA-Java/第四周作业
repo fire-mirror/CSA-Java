@@ -1,0 +1,521 @@
+# 第四周作业
+
+**实验一：Navicat for MySQL 使用基础与 SQL 语言的DDL**
+
+ 
+
+一、实验实习目的及要求（不要太多，概括说明）
+
+本实验首先了解并掌握如何使用 Navicat for MySQL 连接数据库、浏览
+
+数据库对象、运行 SQL 语句和 SQL 脚本，以及如何编辑和运行 SQL 语句。
+
+Navicat for MySQL 可以提高工作效率并简化数据库开发任务。
+
+本次实验还了解 SQL 语言中 DDL 语言的 CREATE、DROP、ALTER 对表、索
+
+引、视图的操作，掌握在 Navicat for MySQL 中用 DDL 语言进行对表、索引、
+
+视图的增加、删除和改动。掌握使用 SQL 语句增加或删除约束，加深对完整性
+
+概念的理解，达到灵活应用的目的。掌握使用 SQL 语句定义和删除同义
+
+二、实验实习设备（环境）及要求（软硬件条件）
+
+硬件：投影仪、每位同学分配已连接校园网 PC 机一台。
+
+软件：本机已安装 MySQL 5.5-8 数据库平台
+
+三、实验实习主要内容（概括说明即可）
+
+（1） Navicat for MySQL 的安装及启动。（这里我使用的是DataGrip，后续Navicat for MySQL相关步骤都用DataGrip代替）
+
+（2） Navicat for MySQL 连接数据库、浏览数据库对象、运行 SQL 语句和
+
+SQL 脚本。
+
+（3） 用 SQL 语句定义表结构（创建、修改和删除）。
+
+（4） 用 SQL 语句定义索引（创建、删除）。
+
+（5） 用 SQL 语句定义视图（创建、删除）。
+
+（6）用 SQL 语句定义同义词（创建、删除）。
+
+四、实验实习主要（非全部）过程或算法说明，及结果展示分析
+
+（源代码需要适当注释，代码用文本，不要截图代码，结果可截图证明）
+
+1.启动 Navicat for MySQL。
+
+2.在 MySQL – 新建连接中完成连接参数配置，并完成连接测试和保存连接
+
+参数。
+
+3.查看 mysql 数据库的 help_category 表的定义、表中数据与索引、完整性约
+
+束等。
+
+4.查看 mysql 数据库的其它数据库对象，如视图、索引、存储过程、函数、
+
+触发器。
+
+5.在 Navicat for MySQL 中打开查询，新建查询，运行简单的 SQL 语句，如
+
+select * from help_keyword where help_keyword_id<=3；观察下结果。
+
+6.登录到本地数据库服务器后，连接到 test 数据库上。
+
+7.用 SQL 语句，建立如下所示的表 student：
+
+CREATE TABLE student
+ (studentid VARCHAR(10),
+ name varchar(20),
+ sex varchar(2),
+ age integer,
+ Fee DECIMAL(10,2),
+ address varchar(50),
+ memo varchar(300))
+
+![img](file:///C:/Users/重焰倒影/AppData/Local/Temp/msohtmlclip1/01/clip_image002.jpg)8. 用 Create Table 语句建表 CourseAa，表结构如下所示：
+
+![img](file:///C:/Users/重焰倒影/AppData/Local/Temp/msohtmlclip1/01/clip_image004.jpg)
+
+CREATE TABLE CourseAa
+ (Aa1 VARCHAR(20),
+ Aa2 integer,
+ Aa3 DECIMAL(10))
+
+\9. 用 Create Table 语句建表 ChooseBb，表结构如下所示：
+
+CREATE TABLE ChooseBb
+ (Bb1 VARCHAR(30),
+ Bb2 integer,
+ Bb3 DECIMAL(6))
+
+![img](file:///C:/Users/重焰倒影/AppData/Local/Temp/msohtmlclip1/01/clip_image006.jpg)
+
+\10. 用 Drop Table 语句删除表 CourseAa。
+
+DROP TABLE `courseAa`
+
+![img](file:///C:/Users/重焰倒影/AppData/Local/Temp/msohtmlclip1/01/clip_image008.jpg)
+
+\11. 用 Alter Table 语句更新表 ChooseBb，添加一个属性名 Bb4，类型 Varchar, 长度 20,完整性约束设为非空值，缺省值设为字符“系统测试值”。
+
+Alter TABLE mysql_01.`choosebb` ADD Bb4 varchar(20)
+ NOT NULL DEFAULT '系统测试值'
+
+![img](file:///C:/Users/重焰倒影/AppData/Local/Temp/msohtmlclip1/01/clip_image010.jpg)
+
+\12. 用 Alter Table 语句更新表 ChooseBb，添加一个属性名 Bb5，类型 Varchar, 长度 10，完整性约束设为主码。完成后，表 ChooseBb 的设计如下所示。
+
+Alter TABLE mysql_01.`choosebb` ADD Bb5 varchar(10);
+ Alter TABLE mysql_01.`choosebb` ADD CONSTRAINT PRIMARY KEY (Bb5)
+
+![img](file:///C:/Users/重焰倒影/AppData/Local/Temp/msohtmlclip1/01/clip_image012.jpg)
+
+\13. 用 Create View 语句建立一个视图 View_Choosebb,生成的视图属性名
+
+（View_bb1，View_bb2，view_bb3）, 其中 View_bb1 对应于基表 ChooseBb
+
+的 Bb1、View_bb2 对应于基表 ChooseBb 的 Bb4、view_bb3 对应于基表
+
+ChooseBb 的 Bb5。完成后，视图 View_Choosebb 的设计如下所示。
+
+```
+ create view View_Choosebb
+    as SELECT bb1,bb4,bb5 FROM ChooseBb
+```
+
+14.用 Drop View 语句删除视图 View_Choosebb。
+
+DROP VIEW View_Choosebb;
+
+\15. 用 Create Index 语句对表 ChooseBb 的 Bb2 属性建立一个升序索引，索引
+
+名 Index_bb2。 用 Create Index 语句对表 ChooseBb 的 Bb4 属性建立一个降
+
+序索引，索引名 Index_bb4。
+
+CREATE INDEX Index_bb2 on choosebb(bb2 ASC);
+ CREATE INDEX Index_bb4 on choosebb(bb4 DESC);
+
+\16. 用 Drop Index 语句删除索引 Index_bb2
+
+DROP INDEX Index_bb2 on choosebb;
+
+五、实验遇到问题及解决办法（有就写，没有可不写）
+
+对于一些SQL语句还不熟练，在一些关键字的使用上有问题，比方说在建立索引时一开始以为直接加在语句后面就行了，但报错了。查找资料后改成了CREATE INDEX Index_bb2 on choosebb(bb2 ASC)，解决了问题。
+
+六、心得体会，及对课程或老师的意见或建议（真实感受，不要套话和抄袭，有就写，没有可不写）
+
+心得体会：
+
+1、在配置主机名或 IP 地址时，如果访问数据库服务器，可以用本机的 IP 地址替代 localhost。 2、MySQL 的端口值默认为 3306。 
+
+3、建立视图 v 之前，必须创建表 t 和插入记录。
+
+**实验二：SQL 语言数据操纵语言 DML**
+
+。。。。。。。。。。。。。。。
+
+ 
+
+ 
+
+一、实验实习目的及要求（不要太多，概括说明）
+
+SQL 语言的数据操纵功能通过 DML(数据维护语言)实现。DML 包括数据查
+
+询和数据更新两种数据操纵语句。其中，数据查询指对数据库中的数据查询、统
+
+计、分组、排序等操作；数据更新指数据的插入、更新和删除等数据维护操
+
+作。
+
+本次实验了解 DML 语言的 INSERT、UPDATE、DELETE 等数据维护语言，
+
+掌握在 Navicat for MySQL 中用 DML 语言的 INSERT、UPDATE、DELETE 对表
+
+进行数据插入、更新和删除。
+
+ 
+
+ 
+
+ 
+
+ 
+
+二、实验实习设备（环境）及要求（软硬件条件）
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+三、实验实习主要内容（概括说明即可）
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+四、实验实习主要（非全部）过程或算法说明，及结果展示分析
+
+（源代码需要适当注释，代码用文本，不要截图代码，结果可截图证明）
+
+\1. 启动 Navicat for MySQL，在 MySQL – 新建连接中完成连接参数配置。
+
+\2. 登录到本地数据库服务器后，连接到 test 数据库上。
+
+以下操作请全部使用 SQL 语句完成
+
+\3. 首先用 Create Table 语句建立 test 表，test 表定义如下所示：
+
+CREATE TABLE test
+ (Name VARCHAR(20),
+ Age INTEGER,
+ Score NUMERIC(10,2),
+ Address VARCHAR(60))
+
+字段名 类型 长度
+
+Name Varchar 20
+
+Age Integer
+
+Score Numeric 10,2(总共长 10 位，小数部分 2 位)
+
+Address Varchar 60
+
+\4. 用 INSERT 语句对表 test,插入如下 7 条记录：
+
+INSERT INTO test (Name, Age, Score, Address) VALUES('赵一',20,580.00,'兴业苑 2-3-5');
+ INSERT INTO test (Name, Age, Score, Address) VALUES('钱二',19,540.00,'南福苑 5-2-9');
+ INSERT INTO test (Name, Age, Score, Address) VALUES('孙三',21,555.50,'兴业苑 21-5-15');
+ INSERT INTO test (Name, Age, Score, Address) VALUES('李四',22,505.00,'知行苑 8-6-22');
+ INSERT INTO test (Name, Age, Score, Address) VALUES('周五',20,495.50,'宁静苑 23-4-8');
+ INSERT INTO test (Name, Age, Score, Address) VALUES('吴六',19,435.00,'南福苑 2-5-12');
+
+\5. 再用 Create Table 语句建立 test_temp 表，test_temp 表定义如下所示：
+
+CREATE TABLE test_temp
+ (Name VARCHAR(20),
+ Age INTEGER,
+ Score NUMERIC(10,2),
+ Address VARCHAR(60));
+
+\6. 用 INSERT 语句对表 test_temp,插入如下 3 条记录：
+
+INSERT INTO test_temp (Name, Age, Score, Address) VALUES('郑七',21,490.50,'兴业苑 11-2-1');
+ INSERT INTO test_temp (Name, Age, Score, Address) VALUES('张八',20,560.00,'明理苑 3-3-3');
+ INSERT INTO test_temp (Name, Age, Score, Address) VALUES('王九',19,515.00,'知行苑 19-7-1');
+
+\7. 用 INSERT INTO ... SELECT ... FROM 语句，将 test_temp 表中的数据，
+
+插入到 test 表中。
+
+INSERT INTO test (Name, Age, Score, Address) select Name,Age,Score,Address FROM test_temp;
+
+\8. 用 UPDATE 语句将 test 表中年龄小于等于 20 的数据，将成绩更新为原来
+
+的成绩加 5 分。
+
+UPDATE test set Score=5+Score WHERE Age<=20;
+
+\9. 用 UPDATE 语句将 test 表中居住在兴业苑所有学生的年龄减少 1 岁。
+
+UPDATE test set Age=Age-1 where Address like '兴业苑%';
+
+\10. 用 DELETE 语句将 test 表中年龄大于等于 21 并且成绩大于等于 500 的学
+
+生数据删除掉。
+
+DELETE FROM test where Age>=21&&Score>=500;
+
+\11. 用 DELETE 语句将 test 表中成绩小于 550 并且居住在南福苑的学生数据
+
+删除掉
+
+DELETE FROM test where SCore<=550&&Address like '南福苑%';
+
+五、实验遇到问题及解决办法（有就写，没有可不写）
+
+ 
+
+ 
+
+ 
+
+六、心得体会，及对课程或老师的意见或建议（真实感受，不要套话和抄袭，有就写，没有可不写）
+
+心得体会：
+
+1、INSERT 语句中，无论是哪一种用法，都应该注意要插入的值与要插入的字段相互对应。 
+
+2、UPDATE 语句中，如果没有指定更新条件 WHERE 子句，则对表中所有记录 进行更新。 
+
+3、DELETE 语句中，如果没有指定删除条件 WHERE 子句，则对表中所有记录 进行删除。使用 DELETE 语句删除表中数据时，并不能释放被占用的数据块空间，将来还可以使用回退（Rollback）操作
+
+ 
+
+ 
+
+ 
+
+**实验三：SQL语言数据查询语言DQL**
+
+。。。。。。。。。。。。。。。
+
+ 
+
+ 
+
+一、实验实习目的及要求（不要太多，概括说明）
+
+数据查询语言指对数据库中的数据查询、统计、分组、排序等操作。查 询语句可以分为简单查询、连接查询、嵌套查询和组合查询等。 本次实验了解SQL 语言的SELECT 语句对数据的查询，学会在Navicat for MySQL 中用 SELECT 语句对表中的数据进行简单查询、连接查询、嵌套查询和组 合查询。
+
+1、实验前：预习实验内容，学习相关知识。
+
+2、实验中：按照实验内容要求进行实验，实验时注意每种 SQL 语句的基本
+
+命令及各个关键字的含义，做好实验记录。
+
+3、实验后：分析实验结果，总结实验知识，得出结论，按格式写出实验报
+
+告。
+
+4、在整个实验过程中，要独立思考、独立按时完成实验任务，不懂的要虚
+
+心向教师或同学请教。
+
+5、要求按指定格式书写实验报告，且报告中应反映出对本次实验的总结，
+
+下次实验前交实验报告
+
+二、实验实习设备（环境）及要求（软硬件条件）
+
+硬件：投影仪、每位同学分配已连接校园网 PC 机一台。
+
+软件：本机已安装 MySQL 5.5-8 数据库平台
+
+三、实验实习主要内容（概括说明即可）
+
+\1. 启动 Navicat for MySQL，用 SELECT 语句对表进行简单查询操作，整
+
+个查询过程只涉及到一个表，是最基本的查询语句。语法格式如下：
+
+Select <目标列组> From <表名> [Where <元组选择条件>] [Group by
+
+<分组列> [Having <组选择条件>]] [Order by <排序列 1> <排序要求>
+
+[, „n]]
+
+\2. 用 SELECT 语句对表进行连接查询操作，连接查询涉及被连接和连接
+
+两个表，所以数据源一般为多个表。用来连接两个表的条件称为连接条件，
+
+一般格式为：
+
+[<表名 1>.]<列名 1> <比较运算符> [<表名 2>.]<列名 2>
+
+
+
+其中比较运算符主要有：=、>、<、>=、<=、!=。
+
+\3. 用 SELECT 语句对表进行嵌套查询操作，一个 Select„From„Where
+
+语句称为一个查询块，将一个查询块嵌套在另一个查询块的 Where 子句或
+
+Having 短语的条件中的查询，就是嵌套查询。主要有使用 In 操作符、Exist
+
+操作符、使用比较运算符的嵌套查询方式。
+
+\4. 用 SELECT 语句对表进行集合查询操作，将 SELECT 语句的查询结果集再
+
+进行集合运算就构成了SQL 的集合查询。集合查询操作符有Union(并操作)、
+
+Intersect(交操作)和 Minus(差操作)。目前 MySQL 仅支持 Union(并操作)
+
+四、实验实习主要（非全部）过程或算法说明，及结果展示分析
+
+（源代码需要适当注释，代码用文本，不要截图代码，结果可截图证明）
+
+\1. 启动 Navicat for MySQL，在 MySQL – 新建连接中完成连接参数配置。
+
+\2. 登录到本地数据库服务器后，连接到 test 数据库上。
+
+3.用 Create Table 建立 Student 表
+
+CREATE TABLE Student
+
+  (SNO VARCHAR(20),
+
+   name VARCHAR(10),
+
+   Age INTEGER,
+
+   Collage VARCHAR(30),
+
+​    PRIMARY KEY (SNO));
+
+SHOW TABLES;
+
+\4. 用 Create Table 建立 Course 表: 
+
+CREATE TABLE Course
+
+(CourseID VARCHAR(30),
+
+ CourseName VARCHAR(30),
+
+ CourseBeforeID VARCHAR(15));
+
+\5. 用 Create Table 建立 Choose 表，表结构如下所示：
+
+CREATE TABLE Choose
+
+(SNO VARCHAR(20),
+
+ CourseID VARCHAR(30),
+
+ SCore DECIMAL(5,2));
+
+\6. 用 INSERT 语句向 Student 表中插入 3 个元组：
+
+注意：每条元组一个完整的 INSERT 语句，3 个元组需要写 3 个 INSERT 语句。
+
+INSERT INTO Student (SNO,Name,Age,Collage) VALUES('S00001','张三',20,'计算机学院');
+ INSERT INTO Student (SNO,Name,Age,Collage) VALUES('S00002','李四',19,'通信学院');
+ INSERT INTO Student (SNO,Name,Age,Collage) VALUES('S00003','王五',21,'计算机学院');
+
+\7. 用 INSERT 语句向 Course 表中插入 3 个元组：
+
+注意：每条元组一个完整的 INSERT 语句，3 个元组需要写 3 个 INSERT 语句。
+
+INSERT INTO Course (CourseID,CourseName,CourseBeforeID) VALUES('C1','计算机引论',NULL);
+ INSERT INTO Course (CourseID,CourseName,CourseBeforeID) VALUES('C2','C语言','C1');
+ INSERT INTO Course (CourseID,CourseName,CourseBeforeID) VALUES('C3','数据结构','C2');
+
+\8. 用 INSERT 语句向 Choose 表中插入 7 个元组：
+
+注意：每条元组一个完整的 INSERT 语句，7 个元组需要写 7 个 INSERT 语句。
+
+INSERT INTO Choose (SNO,CourseID,Score) VALUES('S00001','C1','95');
+ INSERT INTO Choose (SNO,CourseID,Score) VALUES('S00002','C2','80');
+ INSERT INTO Choose (SNO,CourseID,Score) VALUES('S00003','C3','84');
+ INSERT INTO Choose (SNO,CourseID,Score) VALUES('S00004','C1','80');
+ INSERT INTO Choose (SNO,CourseID,Score) VALUES('S00005','C2','85');
+ INSERT INTO Choose (SNO,CourseID,Score) VALUES('S00006','C1','78');
+ INSERT INTO Choose (SNO,CourseID,Score) VALUES('S00007','C3','70');
+
+\9. 用 SELECT 语句，查询计算机学院学生的学号和姓名。
+
+select SNO,NAME from student where College='计算机学院';
+
+\10. 用 SELECT 语句的 between„and„表示查询条件，查询年龄在 20~23 岁的
+
+学生信息。
+
+SELECT * from student WHERE Age BETWEEN 20 and 23;
+
+\11. 用 SELECT 语句的 COUNT()聚集函数，统计 Student 表中学生总人数。
+
+SELECT *count*(*) from student;
+
+\12. 分别用 SELECT 语句的 max()、min()、sum()、avg()四个聚集函数，计算
+
+Choose 表中 C1 课程的最高分、最低分、总分、平均分。
+
+SELECT *MAX*(Score) from choose WHERE CourseID='C1';
+
+\13. 用 SELECT 语句对空值(NULL)的判断条件，查询 Course 表中先修课称编
+
+号为空值的课程编号和课程名称。
+
+SELECT CourseID,CourceName from course where CourseBeforeID is null;
+
+\14. 用 SELECT 语句的连接查询，查询学生的学号、姓名、选修的课程名及成
+
+绩。
+
+SELECT student.SNO,Name,course.CourceName,score from student,course,choose WHERE student.SNO=choose.SNO and choose.CourseID=course.CourseID;
+
+\15. 用 SELECT 的存在量词 EXISTS，查询与“张三”在同一个学院学习的学生
+
+信息。
+
+SELECT * from student s1 WHERE *EXISTS* (SELECT * FROM student s2 WHERE s2.`Name`='张三' and s1.college=s2.college);
+
+\16. 用 SELECT 语句的嵌套查询，查询选修 C1 课程的成绩低于“张三”的学
+
+生的学号和成绩。
+
+SELECT h1.SNO,h1.Score from choose h1 WHERE h1.CourseID='C1' AND h1.Score<ANY (SELECT h2.Score from choose h2 ,student where student.`Name`='张三' and h2.SNO=student.SNO );
+
+\17. 用 SELECT 语句的组合查询(UNION)，查询选修了 C1 课程或者选修了 C3
+
+课程的学生学号。
+
+SELECT choose.SNO FROM choose WHERE choose.CourseID='C1' UNION SELECT choose.SNO FROM choose WHERE choose.CourseID='C3';
+
+\18. 用 SELECT 语句的组合查询(UNION)与 DISTINCT 短语，查询选修了 C1 课
+
+程或者选修了
+
+SELECT DISTINCT choose.SNO,choose.CourseID FROM choose WHERE choose.CourseID='C1' UNION SELECT DISTINCT choose.SNO,choose.CourseID FROM choose WHERE choose.CourseID='C3';
+
+ 
